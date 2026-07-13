@@ -1,6 +1,15 @@
+<<<<<<< HEAD
 flask
 transformers
 torch
 pillow
 flask-cors
 gunicorn
+=======
+flask==3.0.3
+flask-cors==6.0.1
+transformers==4.46.3
+torch==2.5.1
+pillow==11.0.0
+gunicorn==23.0.0
+>>>>>>> 94e63ad (Production configuration)
