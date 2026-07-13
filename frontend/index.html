@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Caption Generator</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fa-solid fa-robot"></i>
+            AI Caption Generator
+        </div>
+
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Features</a></li>
+            <li><a href="#">About</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+
+        <h1>
+            Generate Captions with Artificial Intelligence
+        </h1>
+
+        <p>
+            Upload any image and let AI generate meaningful captions instantly.
+        </p>
+
+    </section>
+
+    <!-- Main Card -->
+    <div class="container">
+
+        <!-- Upload Card -->
+
+        <div class="upload-card">
+
+            <h2>Upload Image</h2>
+
+            <div class="drop-area" id="dropArea">
+
+    <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+
+    <h3>Drag & Drop Image Here</h3>
+
+    <p>or click below to browse</p>
+
+    <input
+        type="file"
+        id="imageInput"
+        accept="image/*"
+        hidden>
+
+    <button id="browseBtn" type="button">
+        Browse Image
+    </button>
+
+</div>
+
+<img
+    id="preview"
+    alt="Preview">
+    <div class="image-info" id="imageInfo">
+
+    <h3>Image Information</h3>
+
+    <div class="info-row">
+        <span>📄 File Name</span>
+        <span id="fileName">-</span>
+    </div>
+
+    <div class="info-row">
+        <span>📦 File Size</span>
+        <span id="fileSize">-</span>
+    </div>
+
+    <div class="info-row">
+        <span>🖼 Resolution</span>
+        <span id="resolution">-</span>
+    </div>
+
+    <div class="info-row">
+        <span>📂 Format</span>
+        <span id="fileType">-</span>
+    </div>
+
+</div>
+
+<button id="generateBtn">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                Generate Caption
+            </button>
+
+        </div>
+
+        <!-- Result Card -->
+
+        <div class="result-card">
+
+    <h2>
+        <i class="fa-solid fa-robot"></i>
+        AI Generated Captions
+    </h2>
+
+    <div class="caption-box">
+
+        <h3>Standard Caption</h3>
+
+        <p id="caption">
+            Upload an image to generate caption.
+        </p>
+
+    </div>
+
+    <div class="caption-box">
+
+        <h3>Short Caption</h3>
+
+        <p id="shortCaption">-</p>
+
+    </div>
+
+    <div class="caption-box">
+
+        <h3>Social Media Caption</h3>
+
+        <p id="socialCaption">-</p>
+
+    </div>
+
+    <div class="caption-box">
+
+        <h3>Hashtags</h3>
+
+        <p id="hashtags">-</p>
+
+    </div>
+
+    <div class="actions">
+
+        <button id="copyBtn">
+            <i class="fa-solid fa-copy"></i>
+            Copy
+        </button>
+
+        <button id="downloadBtn">
+            <i class="fa-solid fa-download"></i>
+            Download
+        </button>
+
+    </div>
+
+</div>
+
+                <button id="copyBtn">
+                    <i class="fa-solid fa-copy"></i>
+                    Copy
+                </button>
+
+                <button id="downloadBtn">
+                    <i class="fa-solid fa-download"></i>
+                    Download
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer>
+
+        Powered by Flask • BLIP • Hugging Face • PyTorch
+
+    </footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
