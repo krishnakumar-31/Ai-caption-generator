@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from model import generate_caption
 import os
+import traceback
 
 app = Flask(__name__)
 CORS(app)
@@ -22,7 +23,7 @@ def home():
 @app.route("/generate", methods=["POST"])
 def generate():
 
-    # Check if image is present
+    # Check if image is uploaded
     if "image" not in request.files:
         return jsonify({
             "status": "error",
@@ -58,11 +59,13 @@ def generate():
     filepath = os.path.join(UPLOAD_FOLDER, file.filename)
 
     try:
-        # Save uploaded image
+        # Save image
         file.save(filepath)
+        print("Image saved:", filepath)
 
         # Generate caption
         caption = generate_caption(filepath)
+        print("Generated Caption:", caption)
 
         # Delete uploaded image
         if os.path.exists(filepath):
@@ -77,17 +80,18 @@ def generate():
         })
 
     except Exception as e:
-       import traceback
+        print("========== ERROR ==========")
+        traceback.print_exc()
+        print("===========================")
 
-    traceback.print_exc()
+        # Delete uploaded image if it exists
+        if os.path.exists(filepath):
+            os.remove(filepath)
 
-    if os.path.exists(filepath):
-        os.remove(filepath)
-
-    return jsonify({
-        "status": "error",
-        "message": str(e)
-    }), 500
+        return jsonify({
+            "status": "error",
+            "message": str(e)
+        }), 500
 
 
 if __name__ == "__main__":
