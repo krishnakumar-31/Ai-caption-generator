@@ -82,49 +82,59 @@ generateBtn.addEventListener("click", async function () {
 
     try {
 
-        const response = await fetch(
-            "https://ai-caption-generator-49v5.onrender.com/generate",
-            {
-                method: "POST",
-                body: formData
-            }
-        );
-
-        const data = await response.json();
-
-        // Show backend error message
-        if (!response.ok) {
-            throw new Error(data.message || "Server error");
+    const response = await fetch(
+        "https://ai-caption-generator-49v5.onrender.com/generate",
+        {
+            method: "POST",
+            body: formData
         }
+    );
 
-        caption.innerHTML = `
-            <strong>Caption</strong><br><br>
-            ${data.caption}
+    // Read response as text first
+    const text = await response.text();
 
-            <hr style="margin:20px 0;">
+    console.log("Server Response:", text);
 
-            <strong>Image</strong> : ${data.filename}<br>
-            <strong>AI Model</strong> : ${data.model}
-        `;
+    let data;
 
-        generateCaptionStyles(data.caption);
-        saveHistory(data.caption);
-
-    } catch (error) {
-
-        caption.innerHTML = `
-            <span style="color:red">
-                ${error.message}
-            </span>
-        `;
-
-        console.error(error);
-
-    } finally {
-
-        generateBtn.disabled = false;
-
+    try {
+        data = JSON.parse(text);
+    } catch (e) {
+        throw new Error("Server returned HTML instead of JSON.\n\n" + text);
     }
+
+    if (!response.ok) {
+        throw new Error(data.message || "Server Error");
+    }
+
+    caption.innerHTML = `
+        <strong>Caption</strong><br><br>
+        ${data.caption}
+
+        <hr style="margin:20px 0;">
+
+        <strong>Image</strong> : ${data.filename}<br>
+        <strong>AI Model</strong> : ${data.model}
+    `;
+
+    generateCaptionStyles(data.caption);
+    saveHistory(data.caption);
+
+} catch (error) {
+
+    caption.innerHTML = `
+        <span style="color:red;white-space:pre-wrap">
+            ${error.message}
+        </span>
+    `;
+
+    console.error(error);
+
+} finally {
+
+    generateBtn.disabled = false;
+
+}
 
 });
 
