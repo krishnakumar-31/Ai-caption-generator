@@ -77,15 +77,17 @@ def generate():
         })
 
     except Exception as e:
+       import traceback
 
-        # Delete uploaded image if an error occurs
-        if os.path.exists(filepath):
-            os.remove(filepath)
+    traceback.print_exc()
 
-        return jsonify({
-            "status": "error",
-            "message": str(e)
-        }), 500
+    if os.path.exists(filepath):
+        os.remove(filepath)
+
+    return jsonify({
+        "status": "error",
+        "message": str(e)
+    }), 500
 
 
 if __name__ == "__main__":

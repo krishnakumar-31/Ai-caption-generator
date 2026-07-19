@@ -65,9 +65,7 @@ function updateImageInfo(file) {
 generateBtn.addEventListener("click", async function () {
 
     if (!selectedFile) {
-
         showToast("Please upload an image first.");
-
         return;
     }
 
@@ -84,35 +82,49 @@ generateBtn.addEventListener("click", async function () {
 
     try {
 
-     const response = await fetch("https://ai-caption-generator-49v5.onrender.com/generate", {
-    method: "POST",
-    body: formData
-});
+        const response = await fetch(
+            "https://ai-caption-generator-49v5.onrender.com/generate",
+            {
+                method: "POST",
+                body: formData
+            }
+        );
 
         const data = await response.json();
 
-caption.innerHTML = `
-<strong>Caption</strong><br><br>
-${data.caption}
+        // Show backend error message
+        if (!response.ok) {
+            throw new Error(data.message || "Server error");
+        }
 
-<hr style="margin:20px 0;">
+        caption.innerHTML = `
+            <strong>Caption</strong><br><br>
+            ${data.caption}
 
-<strong>Image</strong> : ${data.filename}<br>
-<strong>AI Model</strong> : ${data.model}
-`;
+            <hr style="margin:20px 0;">
 
-generateCaptionStyles(data.caption);
+            <strong>Image</strong> : ${data.filename}<br>
+            <strong>AI Model</strong> : ${data.model}
+        `;
 
-saveHistory(data.caption);
+        generateCaptionStyles(data.caption);
+        saveHistory(data.caption);
 
     } catch (error) {
 
-        caption.innerHTML =
-            "<span style='color:red'>Unable to generate caption.</span>";
+        caption.innerHTML = `
+            <span style="color:red">
+                ${error.message}
+            </span>
+        `;
+
+        console.error(error);
+
+    } finally {
+
+        generateBtn.disabled = false;
 
     }
-
-    generateBtn.disabled = false;
 
 });
 
